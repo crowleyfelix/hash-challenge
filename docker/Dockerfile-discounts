@@ -1,0 +1,13 @@
+FROM golang:1.16.3
+
+RUN apt update && \
+    apt install -y protobuf-compiler
+
+ENV GO111MODULE on
+
+RUN go get google.golang.org/protobuf/cmd/protoc-gen-go \
+    google.golang.org/grpc/cmd/protoc-gen-go-grpc
+
+WORKDIR /go/api
+
+COPY ./discounts/proto /go/api/proto

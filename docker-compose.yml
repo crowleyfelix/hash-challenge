@@ -1,0 +1,10 @@
+version: "3.6"
+services:
+  discounts:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-discounts
+    volumes:
+    - ./discounts:/go/api
+    stdin_open: true
+    tty: true
