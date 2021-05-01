@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option go_package = "discounts/proto";
+
+package discounts;
+
+service DiscountCalculator {
+  rpc Calculate (CalculateRequest) returns (CalculateResponse) {}
+}
+
+message CalculateRequest {
+  string product_id = 1;
+  string user_id = 2;
+}
+
+message CalculateResponse {
+  string message = 1;
+}
+
+message Product {
+    string id = 1;
+    int64 price_in_cents = 2;
+    string title = 3;
+    string description = 4;
+    ProductDiscount discount = 5;
+}
+
+message ProductDiscount {
+    float percentage = 1;
+    int64 value_in_cents = 2;
+}
