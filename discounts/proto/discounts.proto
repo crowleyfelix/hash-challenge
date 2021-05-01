@@ -4,6 +4,9 @@ option go_package = "discounts/proto";
 
 package discounts;
 
+import "google/protobuf/timestamp.proto";
+
+
 service DiscountCalculator {
   rpc Calculate (CalculateRequest) returns (CalculateResponse) {}
 }
@@ -14,7 +17,15 @@ message CalculateRequest {
 }
 
 message CalculateResponse {
-  string message = 1;
+  User user = 1;
+  Product product = 2;
+}
+
+message User {
+  string id = 1; 
+  string first_name = 2;
+  string last_name = 3;
+  google.protobuf.Timestamp date_of_birth = 4;
 }
 
 message Product {
