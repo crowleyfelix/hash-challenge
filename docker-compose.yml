@@ -8,3 +8,12 @@ services:
     - ./discounts:/go/api
     stdin_open: true
     tty: true
+
+  mongodb:
+    image: mongo:4
+    logging:
+      driver: none
+    environment:
+    - AUTH=no
+    ports:
+    - 27017:27017

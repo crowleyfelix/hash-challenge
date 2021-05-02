@@ -1,0 +1,17 @@
+[
+    {
+        "priceInCents": 1000,
+        "title": "Camiseta Regata",
+        "description": "Camiseta Regata"
+    },
+    {
+        "priceInCents": 1010,
+        "title": "Camisa Polo",
+        "description": "Camisa Polo"
+    },
+    {
+        "priceInCents": 1076,
+        "title": "Camisa Jeans",
+        "description": "Camisa Jeans"
+    }
+]
