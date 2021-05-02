@@ -33,10 +33,10 @@ message Product {
     int64 price_in_cents = 2;
     string title = 3;
     string description = 4;
-    ProductDiscount discount = 5;
+    Discount discount = 5;
 }
 
-message ProductDiscount {
+message Discount {
     float percentage = 1;
     int64 value_in_cents = 2;
 }
