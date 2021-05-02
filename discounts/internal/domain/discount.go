@@ -9,7 +9,7 @@ const (
 )
 
 type Discount struct {
-	Percentage   float64
+	Percentage   float32
 	ValueInCents int64
 }
 
@@ -17,7 +17,14 @@ type DiscountCalculator interface {
 	Calculate(price int64) *Discount
 }
 
-type birthdayDiscountRule struct{ user User }
+func NewDiscountCalculators(user *User) []DiscountCalculator {
+	return []DiscountCalculator{
+		&birthdayDiscountRule{user},
+		&blackFridayDiscountRule{},
+	}
+}
+
+type birthdayDiscountRule struct{ user *User }
 
 func (c *birthdayDiscountRule) Calculate(price int64) *Discount {
 
