@@ -1,7 +1,7 @@
 package mongodb
 
 import (
-	"discounts/internal/models"
+	"discounts/internal/domain"
 	"discounts/internal/testing"
 
 	. "github.com/onsi/ginkgo"
@@ -27,7 +27,7 @@ var _ = Describe("ProductRepository", func() {
 	Describe("finding a product by id", func() {
 		var (
 			id      string
-			product *models.Product
+			product *domain.Product
 			err     error
 		)
 
@@ -72,7 +72,7 @@ var _ = Describe("UserRepository", func() {
 	Describe("finding a user by id", func() {
 		var (
 			id   string
-			user *models.User
+			user *domain.User
 			err  error
 		)
 

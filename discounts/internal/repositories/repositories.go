@@ -1,16 +1,16 @@
 package repositories
 
 import (
-	"discounts/internal/models"
+	"discounts/internal/domain"
 	"discounts/internal/repositories/mongodb"
 )
 
 type ProductRepository interface {
-	Find(string) (*models.Product, error)
+	Find(string) (*domain.Product, error)
 }
 
 type UserRepository interface {
-	Find(string) (*models.User, error)
+	Find(string) (*domain.User, error)
 }
 
 func NewProduct() ProductRepository {

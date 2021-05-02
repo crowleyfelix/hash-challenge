@@ -1,7 +1,7 @@
 package mongodb
 
 import (
-	"discounts/internal/models"
+	"discounts/internal/domain"
 
 	"github.com/kamva/mgm/v3"
 )
@@ -20,13 +20,13 @@ func (repo *repository) Find(id string, model mgm.Model) error {
 
 type ProductRepository struct{ repository }
 
-func (repo *ProductRepository) Find(id string) (*models.Product, error) {
+func (repo *ProductRepository) Find(id string) (*domain.Product, error) {
 	data := new(Product)
 	if err := repo.repository.Find(id, data); err != nil {
 		return nil, err
 	}
 
-	return &models.Product{
+	return &domain.Product{
 		ID:           data.ID.Hex(),
 		Title:        data.Title,
 		Description:  data.Description,
@@ -36,13 +36,13 @@ func (repo *ProductRepository) Find(id string) (*models.Product, error) {
 
 type UserRepository struct{ repository }
 
-func (repo *UserRepository) Find(id string) (*models.User, error) {
+func (repo *UserRepository) Find(id string) (*domain.User, error) {
 	data := new(User)
 	if err := repo.repository.Find(id, data); err != nil {
 		return nil, err
 	}
 
-	return &models.User{
+	return &domain.User{
 		ID:          data.ID.Hex(),
 		FirstName:   data.FirstName,
 		LastName:    data.LastName,
