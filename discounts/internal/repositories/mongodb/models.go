@@ -8,14 +8,14 @@ import (
 
 type Product struct {
 	mgm.DefaultModel `bson:",inline"`
-	PriceInCents     int64  `bson:"priceInCents"`
-	Title            string `bson:"Title"`
-	Description      string `bson:"description"`
+	PriceInCents     int64  `json:"priceInCents" bson:"priceInCents"`
+	Title            string `json:"title" bson:"title"`
+	Description      string `json:"description" bson:"description"`
 }
 
 type User struct {
 	mgm.DefaultModel `bson:",inline"`
-	FirstName        string    `bson:"firstName"`
-	LastName         string    `bson:"lastName"`
-	DateOfBirth      time.Time `bson:"dateOfBirth"`
+	FirstName        string    `json:"firstName" bson:"firstName"`
+	LastName         string    `json:"lastName" bson:"lastName"`
+	DateOfBirth      time.Time `json:"dateOfBirth" bson:"dateOfBirth"`
 }
