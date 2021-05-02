@@ -19,10 +19,10 @@ var _ = Describe("ProductRepository", func() {
 			Fail(err.Error())
 		}
 
-		loadFixtures(fixtures)
+		LoadFixtures(fixtures)
 	})
 
-	AfterEach(func() { disposeFixtures(fixtures) })
+	AfterEach(func() { DisposeFixtures(fixtures) })
 
 	Describe("finding a product by id", func() {
 		var (
@@ -64,10 +64,10 @@ var _ = Describe("UserRepository", func() {
 			Fail(err.Error())
 		}
 
-		loadFixtures(fixtures)
+		LoadFixtures(fixtures)
 	})
 
-	AfterEach(func() { disposeFixtures(fixtures) })
+	AfterEach(func() { DisposeFixtures(fixtures) })
 
 	Describe("finding a user by id", func() {
 		var (

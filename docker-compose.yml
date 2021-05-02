@@ -8,7 +8,9 @@ services:
     - ./discounts:/go/api
     stdin_open: true
     tty: true
-
+    ports:
+    - 3000:3000
+  
   mongodb:
     image: mongo:4
     logging:

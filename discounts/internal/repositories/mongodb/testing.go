@@ -8,7 +8,7 @@ import (
 	. "github.com/onsi/ginkgo"
 )
 
-func loadFixtures(fixtures interface{}) {
+func LoadFixtures(fixtures interface{}) {
 	for _, m := range toModelSlice(fixtures) {
 		ctx := context.TODO()
 		coll := mgm.Coll(m)
@@ -21,7 +21,7 @@ func loadFixtures(fixtures interface{}) {
 	}
 }
 
-func disposeFixtures(fixtures interface{}) {
+func DisposeFixtures(fixtures interface{}) {
 	for _, m := range toModelSlice(fixtures) {
 		coll := mgm.Coll(m)
 
