@@ -9,9 +9,9 @@ import (
 type repository struct{}
 
 func (repo *repository) Find(id string, model mgm.Model) error {
-	data := new(User)
-	coll := mgm.Coll(data)
-	if err := coll.FindByID(id, data); err != nil {
+	coll := mgm.Coll(model)
+
+	if err := coll.FindByID(id, model); err != nil {
 		return err
 	}
 
@@ -27,7 +27,7 @@ func (repo *ProductRepository) Find(id string) (*models.Product, error) {
 	}
 
 	return &models.Product{
-		ID:           data.ID.String(),
+		ID:           data.ID.Hex(),
 		Title:        data.Title,
 		Description:  data.Description,
 		PriceInCents: data.PriceInCents,
@@ -43,7 +43,7 @@ func (repo *UserRepository) Find(id string) (*models.User, error) {
 	}
 
 	return &models.User{
-		ID:          data.ID.String(),
+		ID:          data.ID.Hex(),
 		FirstName:   data.FirstName,
 		LastName:    data.LastName,
 		DateOfBirth: data.DateOfBirth,

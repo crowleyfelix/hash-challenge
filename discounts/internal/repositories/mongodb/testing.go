@@ -2,45 +2,49 @@ package mongodb
 
 import (
 	"context"
-	"discounts/internal/testing"
+	"reflect"
 
 	"github.com/kamva/mgm/v3"
 	. "github.com/onsi/ginkgo"
 )
 
-func loadFixtures(path string, fixtures interface{}) {
-	if err := testing.LoadJson(path, &fixtures); err != nil {
-		Fail(err.Error())
-	}
-
-	f, ok := fixtures.([]mgm.Model)
-	if !ok {
-		Fail("Invalid fixtures type")
-	}
-
-	coll := mgm.Coll(f[0])
-	for i, _ := range f {
+func loadFixtures(fixtures interface{}) {
+	for _, m := range toModelSlice(fixtures) {
 		ctx := context.TODO()
+		coll := mgm.Coll(m)
 
-		r, err := coll.InsertOne(ctx, f[i])
+		r, err := coll.InsertOne(ctx, m)
 		if err != nil {
 			Fail(err.Error())
 		}
-		f[i].SetID(r.InsertedID)
+		m.SetID(r.InsertedID)
 	}
 }
 
 func disposeFixtures(fixtures interface{}) {
-	f, ok := fixtures.([]mgm.Model)
-	if !ok {
-		Fail("Invalid fixtures type")
-	}
+	for _, m := range toModelSlice(fixtures) {
+		coll := mgm.Coll(m)
 
-	coll := mgm.Coll(f[0])
-	for i, _ := range f {
-		err := coll.Delete(f[i])
+		err := coll.Delete(m)
 		if err != nil {
 			Fail(err.Error())
 		}
 	}
+}
+
+func toModelSlice(v interface{}) []mgm.Model {
+	switch reflect.TypeOf(v).Kind() {
+	case reflect.Slice:
+		s := reflect.ValueOf(v)
+
+		ms := make([]mgm.Model, 0)
+
+		for i := 0; i < s.Len(); i++ {
+			ms = append(ms, s.Index(i).Addr().Interface().(mgm.Model))
+		}
+
+		return ms
+	}
+
+	return nil
 }
