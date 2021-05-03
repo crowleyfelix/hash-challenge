@@ -17,7 +17,7 @@ services:
       dockerfile: ./docker/Dockerfile-products
     volumes:
     - ./products:/srv
-    - ./discounts/proto/discounts.proto:/srv/proto/discounts.proto
+    - ./discounts/proto:/dist/proto
     stdin_open: true
     tty: true
     ports:
