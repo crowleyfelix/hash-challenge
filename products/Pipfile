@@ -4,11 +4,15 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+autopep8 = "*"
 
 [packages]
-sanic = "*"
-grpcio = "*"
-grpcio-tools = "*"
+sanic = "==21.3.4"
+grpcio = "==1.37.1"
+grpcio-tools = "==1.37.1"
+marshmallow = "==3.11.1"
+pydantic = "==1.8.1"
+motor = "*"
 
 [requires]
 python_version = "3.8"
