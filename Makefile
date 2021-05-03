@@ -13,4 +13,5 @@ test:
 
 compile-proto:
 	@docker-compose run discounts make compile-proto
+	@docker-compose run products make compile-proto
     

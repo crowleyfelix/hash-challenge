@@ -10,6 +10,18 @@ services:
     tty: true
     ports:
     - 3000:3000
+
+  products:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-products
+    volumes:
+    - ./products:/srv
+    - ./discounts/proto/discounts.proto:/srv/proto/discounts.proto
+    stdin_open: true
+    tty: true
+    ports:
+    - 3001:3001
   
   mongodb:
     image: mongo:4
