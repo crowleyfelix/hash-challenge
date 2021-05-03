@@ -1,9 +1,10 @@
 from motor.core import Collection
+from .schemas import BaseSchema
 
 class BaseRepository:
     collection_name = None
-    search_schema = None
-    entity_schema: Schema = None
+    search_schema: BaseSchema = None
+    entity_schema: BaseSchema = None
 
     def __init__(self, database):
 
@@ -14,7 +15,7 @@ class BaseRepository:
         super().__init__()
 
 
-    async def _list(self, filters: dict) -> List[DictObject]:
+    async def _list(self, filters: dict):
         query = self.search_schema.dump(filters)
 
         limit = "limit" in query and query.pop("limit")

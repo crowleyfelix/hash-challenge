@@ -2,7 +2,7 @@ dep:
 	@pipenv install -d
 
 test:
-	@nosetests tests
+	@pipenv run coverage run --source=app --branch -m unittest discover test -s .
 
 compile-proto:
 	@pipenv run python -m grpc_tools.protoc \
