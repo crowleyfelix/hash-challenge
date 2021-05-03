@@ -2,7 +2,6 @@ package mongodb
 
 import (
 	"discounts/internal/domain"
-	"discounts/internal/testing"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -14,13 +13,7 @@ var _ = Describe("ProductRepository", func() {
 		fixtures []Product
 	)
 
-	BeforeEach(func() {
-		if err := testing.LoadJson("fixtures/products.json", &fixtures); err != nil {
-			Fail(err.Error())
-		}
-
-		LoadFixtures(fixtures)
-	})
+	BeforeEach(func() { fixtures, _ = ProductFixtures() })
 
 	AfterEach(func() { DisposeFixtures(fixtures) })
 
@@ -59,13 +52,7 @@ var _ = Describe("UserRepository", func() {
 		fixtures []User
 	)
 
-	BeforeEach(func() {
-		if err := testing.LoadJson("fixtures/users.json", &fixtures); err != nil {
-			Fail(err.Error())
-		}
-
-		LoadFixtures(fixtures)
-	})
+	BeforeEach(func() { fixtures, _ = UserFixtures() })
 
 	AfterEach(func() { DisposeFixtures(fixtures) })
 
