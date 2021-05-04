@@ -1,5 +1,6 @@
 from .base import BaseRepository
 from .schemas import PAGING_SCHEMA, PRODUCT_SCHEMA
+from app.domain import Product
 
 class ProductRepository(BaseRepository):
     collection_name = "products"
@@ -7,7 +8,7 @@ class ProductRepository(BaseRepository):
     search_schema = PAGING_SCHEMA
 
     async def list(self, filters: dict):
-        return await self._list(filters)
+        return [Product(**item) for item in await self._list(filters)]
             
 
 

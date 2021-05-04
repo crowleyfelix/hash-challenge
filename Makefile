@@ -13,6 +13,7 @@ fixtures:
 
 test:
 	@docker-compose run discounts make test
+	@docker-compose run products make test
 
 compile-proto:
 	@docker-compose run discounts make compile-proto

@@ -21,5 +21,5 @@ class TestProductRepository(BaseTestCase):
     async def test_list(self):
         products = await self.repo.list({"limit": 100})
         for expected in self.fixtures.products:
-            actual = next((p for p in products if p["id"] == expected["id"]), None)
+            actual = next((p for p in products if p.id == expected["id"]), None)
             self.assertEqual(actual, expected)
