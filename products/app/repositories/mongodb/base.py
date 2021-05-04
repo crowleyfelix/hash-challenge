@@ -1,4 +1,5 @@
 from motor.core import Collection
+from app.infrastructure import ioc
 from .schemas import BaseSchema
 
 class BaseRepository:
@@ -6,7 +7,10 @@ class BaseRepository:
     search_schema: BaseSchema = None
     entity_schema: BaseSchema = None
 
-    def __init__(self, database):
+    def __init__(self):
+        config = ioc.instance(ioc.Dependencies.config)
+        client = ioc.instance(ioc.Dependencies.mongodb_driver)
+        database = client[config.mongodb.database]
 
         if not self.collection_name:
             raise NotImplementedError("The collection name wasn't set")

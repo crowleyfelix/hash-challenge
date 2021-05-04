@@ -16,6 +16,8 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile-products
+    env_file: 
+      ./products/.env
     volumes:
     - ./products:/srv
     - ./testdata:/testdata

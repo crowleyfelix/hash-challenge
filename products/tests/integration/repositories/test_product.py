@@ -8,11 +8,8 @@ class TestProductRepository(BaseTestCase):
         await super().setUpAsync()
         self.fixtures = FixturesTask()
         await self.fixtures.execute()
-        client = AsyncIOMotorClient("mongodb://mongodb:27017",
-                                     uuidRepresentation="standard",
-                                     connect=False)
 
-        self.repo = ProductRepository(client.mgm_lab)
+        self.repo = ProductRepository()
     
     async def tearDownAsync(self):
         await self.fixtures.revert()

@@ -2,9 +2,11 @@ import inject
 
 
 class Dependencies:
+    config = "config"
+    loop = "loop"
     product_repo = "product_repo"
     product_svc = "product_svc"
-    mongo_driver = "mongo_driver"
+    mongodb_driver = "mongodb_driver"
 
 
 def configure(binder):
@@ -13,3 +15,6 @@ def configure(binder):
 
 def instance(key: Dependencies):
     return inject.instance(key)
+
+async def dispose(self):
+    inject.clear()
