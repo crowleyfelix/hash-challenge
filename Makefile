@@ -8,8 +8,12 @@ dep:
 start:
 	@docker-compose up -d
 
+fixtures:
+	@docker-compose run discounts make fixtures
+
 test:
 	@docker-compose run discounts make test
+	@docker-compose run products make test
 
 compile-proto:
 	@docker-compose run discounts make compile-proto

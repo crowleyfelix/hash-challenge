@@ -4,23 +4,23 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"os"
+
+	. "github.com/onsi/ginkgo"
 )
 
-func LoadJson(path string, result interface{}) error {
+func LoadJson(path string, result interface{}) {
 	f, err := os.Open(path)
 	if err != nil {
-		return err
+		Fail(err.Error())
 	}
 	defer f.Close()
 
 	var blob []byte
 	if blob, err = ioutil.ReadAll(f); err != nil {
-		return err
+		Fail(err.Error())
 	}
 
 	if err = json.Unmarshal(blob, result); err != nil {
-		return err
+		Fail(err.Error())
 	}
-
-	return err
 }

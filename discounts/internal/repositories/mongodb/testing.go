@@ -2,11 +2,40 @@ package mongodb
 
 import (
 	"context"
+	"discounts/internal/testing"
 	"reflect"
 
 	"github.com/kamva/mgm/v3"
 	. "github.com/onsi/ginkgo"
 )
+
+const FixturesPath = "/go/testdata"
+
+func ProductFixtures() ([]Product, func()) {
+	var fixtures []Product
+
+	testing.LoadJson(FixturesPath+"/products.json", &fixtures)
+	LoadFixtures(fixtures)
+
+	updater := func() {
+		UpdateFixtures(fixtures)
+	}
+
+	return fixtures, updater
+}
+
+func UserFixtures() ([]User, func()) {
+	var fixtures []User
+
+	testing.LoadJson(FixturesPath+"/users.json", &fixtures)
+	LoadFixtures(fixtures)
+
+	updater := func() {
+		UpdateFixtures(fixtures)
+	}
+
+	return fixtures, updater
+}
 
 func LoadFixtures(fixtures interface{}) {
 	for _, m := range toModelSlice(fixtures) {
@@ -18,6 +47,17 @@ func LoadFixtures(fixtures interface{}) {
 			Fail(err.Error())
 		}
 		m.SetID(r.InsertedID)
+	}
+}
+
+func UpdateFixtures(fixtures interface{}) {
+	for _, m := range toModelSlice(fixtures) {
+		coll := mgm.Coll(m)
+
+		err := coll.Update(m)
+		if err != nil {
+			Fail(err.Error())
+		}
 	}
 }
 

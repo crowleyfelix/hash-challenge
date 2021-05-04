@@ -3,7 +3,6 @@ package services
 import (
 	"context"
 	"discounts/internal/repositories/mongodb"
-	"discounts/internal/testing"
 	"discounts/internal/utils"
 	"discounts/proto"
 	"time"
@@ -12,29 +11,29 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("ProductRepository", func() {
+var _ = Describe("DiscountCalculator", func() {
 	var (
 		svc      proto.DiscountCalculatorServer
 		products []mongodb.Product
 		users    []mongodb.User
+		update   func()
 	)
 
 	BeforeEach(func() {
+		var (
+			iu func()
+			uu func()
+		)
+
 		svc = NewDiscountCalculator()
 
-		if err := testing.LoadJson("fixtures/products.json", &products); err != nil {
-			Fail(err.Error())
-		}
+		products, iu = mongodb.ProductFixtures()
+		users, uu = mongodb.UserFixtures()
 
-		if err := testing.LoadJson("fixtures/users.json", &users); err != nil {
-			Fail(err.Error())
-		}
+		update = func() { iu(); uu() }
 	})
 
-	JustBeforeEach(func() {
-		mongodb.LoadFixtures(products)
-		mongodb.LoadFixtures(users)
-	})
+	JustBeforeEach(func() { update() })
 
 	AfterEach(func() {
 		mongodb.DisposeFixtures(products)
