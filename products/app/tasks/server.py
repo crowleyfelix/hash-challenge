@@ -1,7 +1,7 @@
 from app.infrastructure.logging import set_up
 set_up()
 
-from app.infrastructure import ioc
+from app.infrastructure import ioc, sanic
 from app import application, routes
 from sanic import Sanic
 from gunicorn.app.base import BaseApplication as GunicornBaseEngine
@@ -42,6 +42,7 @@ class WebServerTask(GunicornBaseEngine):
     def load(self):
         logger.debug("Loading server configuration")
         server = Sanic(__name__)
+        server.error_handler = sanic.CustomErrorHandler()
         routes.register(server)
         server.before_server_start(self.on_server_start)
         server.after_server_stop(self.on_server_stop)

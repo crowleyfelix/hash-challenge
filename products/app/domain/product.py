@@ -21,7 +21,7 @@ class Product(BaseModel):
 
         return self._discount
 
-    def dict(self):
-        d = super().dict()
+    def dict(self, *args, **kwargs):
+        d = super().dict(*args, **kwargs)
         d["discount"] = self.discount and self.discount.dict()
         return d
