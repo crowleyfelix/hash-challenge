@@ -1,5 +1,9 @@
+import logging
+
 from pydantic import BaseModel
 from .discount import Discount
+
+logger = logging.getLogger(__name__)
 
 class Product(BaseModel):
     id: str = None
@@ -10,4 +14,5 @@ class Product(BaseModel):
 
     @property
     def discount(self):
+        logger.info("Calculating discount")
         return Discount(percentage=0.1, value_in_cents=234)
