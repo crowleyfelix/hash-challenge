@@ -18,7 +18,14 @@ class _Application:
     def __init__(self, config, loop=None):
         self._config = config
         self._loop = loop or asyncio.get_event_loop()
-        self.ioc = None
+
+    @property
+    def config(self) -> ApplicationConfig:
+        return self._config
+
+    @property
+    def loop(self) -> asyncio.AbstractEventLoop:
+        return self._loop
 
     async def setup(self):
         try:

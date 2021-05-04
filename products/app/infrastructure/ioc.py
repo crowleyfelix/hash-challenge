@@ -10,7 +10,7 @@ class Dependencies:
 
 
 def configure(binder):
-    inject.configure(binder, False)
+    inject.configure_once(binder, False)
 
 
 def instance(key: Dependencies):

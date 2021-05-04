@@ -15,6 +15,7 @@ marshmallow = "==3.11.1"
 pydantic = "==1.8.1"
 motor = "==2.4.0"
 inject = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.8"
