@@ -1,6 +1,9 @@
 dep:
 	@pipenv install -d
 
+start:
+	@pipenv run python -m app.tasks.server
+
 test:
 	@pipenv run coverage run --source=app --branch -m unittest discover test -s .
 	@pipenv run coverage report --include=$(shell pwd)/* --ignore-errors

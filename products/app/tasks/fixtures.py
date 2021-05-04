@@ -3,16 +3,16 @@ import json
 from motor.motor_asyncio import AsyncIOMotorClient
 from motor.core import Collection
 from app.repositories.mongodb import schemas
+from app.infrastructure import ioc
 
 FIXTURES_PATH = "/testdata"
 
 class FixturesTask:
     def __init__(self):
         self.products = []
-        self.client = AsyncIOMotorClient("mongodb://mongodb:27017",
-                                     uuidRepresentation="standard",
-                                     connect=False)
-        self.db = self.client.mgm_lab
+        config = ioc.instance(ioc.Dependencies.config)
+        client = ioc.instance(ioc.Dependencies.mongodb_driver)
+        self.db = client[config.mongodb.database]
 
     async def execute(self, params=None):
         with open(f"{FIXTURES_PATH}/products.json") as f:

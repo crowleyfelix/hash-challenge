@@ -2,6 +2,7 @@ import functools
 import asyncio
 from unittest import TestCase
 import json
+from app import application
 
 
 def async_test(func, *args, **kwargs):
@@ -18,6 +19,7 @@ class BaseTestCase(TestCase):
 
     def setUp(self, *args):
         self.loop = asyncio.get_event_loop()
+        self.app = application.build(self.loop)
         super().setUp()
         self.loop.run_until_complete(self.setUpAsync())
 
@@ -26,10 +28,10 @@ class BaseTestCase(TestCase):
         super().tearDown()
 
     async def setUpAsync(self):
-        pass
+        await self.app.setup()
 
     async def tearDownAsync(self):
-        pass
+        await self.app.shutdown()
 
     def async_return(self, result) -> asyncio.Future:
         f = asyncio.Future()

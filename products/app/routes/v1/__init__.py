@@ -1,0 +1,1 @@
+from .products import list_products
