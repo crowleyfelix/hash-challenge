@@ -10,12 +10,13 @@ services:
     stdin_open: true
     tty: true
     ports:
-    - 3000:3000
+    - 8080:8080
 
   products:
     build:
       context: .
       dockerfile: ./docker/Dockerfile-products
+    command: make start
     env_file: 
       ./products/.env
     volumes:
@@ -25,7 +26,7 @@ services:
     stdin_open: true
     tty: true
     ports:
-    - 3001:3001
+    - 8081:8081
   
   mongodb:
     image: mongo:4

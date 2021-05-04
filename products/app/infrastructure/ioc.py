@@ -16,5 +16,5 @@ def configure(binder):
 def instance(key: Dependencies):
     return inject.instance(key)
 
-async def dispose(self):
+async def dispose():
     inject.clear()

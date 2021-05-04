@@ -1,8 +1,15 @@
-"""Módulo da aplicação web."""
-from gunicorn.app.base import BaseApplication as GunicornBaseEngine
+from app.infrastructure.logging import set_up
+set_up()
+
+from app.infrastructure import ioc
+from app import application, routes
 from sanic import Sanic
-from app import application
-from app.infrastructure import logging, ioc
+from gunicorn.app.base import BaseApplication as GunicornBaseEngine
+import logging
+import asyncio
+
+
+logger = logging.getLogger(__name__)
 
 
 class WebServerTask(GunicornBaseEngine):
@@ -25,7 +32,6 @@ class WebServerTask(GunicornBaseEngine):
             "errorlog": self.GUNICORN_STDOUT,
             "capture_output": True,
             "loglevel": config.log.access_level,
-            "access_log_format": logging.FORMATTERS["access"]["format"],
             "worker_class": "sanic.worker.GunicornWorker",
             "workers": config.server.workers
         }
@@ -34,17 +40,22 @@ class WebServerTask(GunicornBaseEngine):
             self.cfg.set(key.lower(), value)
 
     def load(self):
+        logger.debug("Loading server configuration")
         server = Sanic(__name__)
+        routes.register(server)
         server.before_server_start(self.on_server_start)
         server.after_server_stop(self.on_server_stop)
         return server
 
     async def on_server_start(self, *args, **kwargs):
+        logger.info("Starting server")
         self.app.loop = asyncio.get_event_loop()
         await self.app.setup()
 
     async def on_server_stop(self, *args, **kwargs):
+        logger.info("Stopping server")
         await self.app.shutdown()
+
 
 if __name__ == "__main__":
     app = application.build()
