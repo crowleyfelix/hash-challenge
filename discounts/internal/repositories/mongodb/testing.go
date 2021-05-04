@@ -9,7 +9,7 @@ import (
 	. "github.com/onsi/ginkgo"
 )
 
-const FixturesPath = "/go/api/testdata"
+const FixturesPath = "/go/testdata"
 
 func ProductFixtures() ([]Product, func()) {
 	var fixtures []Product

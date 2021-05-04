@@ -6,6 +6,7 @@ services:
       dockerfile: ./docker/Dockerfile-discounts
     volumes:
     - ./discounts:/go/api
+    - ./testdata:/go/testdata
     stdin_open: true
     tty: true
     ports:
@@ -17,6 +18,7 @@ services:
       dockerfile: ./docker/Dockerfile-products
     volumes:
     - ./products:/srv
+    - ./testdata:/testdata
     - ./discounts/proto:/dist/proto
     stdin_open: true
     tty: true

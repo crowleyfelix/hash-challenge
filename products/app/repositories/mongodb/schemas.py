@@ -1,7 +1,25 @@
+import bson
 from marshmallow import Schema, fields, validate, EXCLUDE, post_dump
 
 PAGE_LIMIT_DEFAULT = 10
 PAGE_LIMIT_MAX = 100
+
+
+class MongoDBId(fields.Raw):
+    default_error_messages = {
+        "invalid": "Not a valid id. It must be a 12-byte input or a 24-character hex string"
+    }
+
+    def _deserialize(self, value: str, attr, data, **kwargs):
+        return str(value)
+
+    def _serialize(self, value: bson.ObjectId, *args, **kwargs):
+        try:
+            value = bson.ObjectId(value)
+        except InvalidId:
+            raise self.make_error("invalid")
+        return super()._serialize(value, *args, **kwargs)
+
 
 class BaseSchema(Schema):
     class Meta:
@@ -20,16 +38,19 @@ class BaseSchema(Schema):
 
         return data
 
+
 class ProductSchema(BaseSchema):
-    id = fields.String()
-    price_in_cents = fields.Integer()
+    id = MongoDBId(data_key="_id")
+    price_in_cents = fields.Integer(data_key="priceInCents")
     title = fields.String()
     description = fields.String()
 
+
 class PagingSchema(BaseSchema):
     limit = fields.Integer(validate=validate.Range(1, PAGE_LIMIT_MAX),
-                        missing=PAGE_LIMIT_DEFAULT)
+                           missing=PAGE_LIMIT_DEFAULT)
     offset = fields.Integer(missing=0)
+
 
 PRODUCT_SCHEMA = ProductSchema(validate_dump=True)
 PAGING_SCHEMA = PagingSchema(validate_dump=True)
