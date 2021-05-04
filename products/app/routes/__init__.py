@@ -3,4 +3,4 @@ from . import v1
 
 
 def register(server: Sanic):
-    server.add_route(v1.list_products, "/products")
+    server.add_route(v1.list_products, "/users/<user_id>/products")
