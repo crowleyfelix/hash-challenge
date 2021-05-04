@@ -18,6 +18,6 @@ class ProductService:
         products = await repo.list(request)
 
         for pr in products:
-            pr.discount_calculator = calculator
+            pr.discount = await calculator.calculate(pr)
 
         return contracts.ListProductsResponse(data=products, **request)

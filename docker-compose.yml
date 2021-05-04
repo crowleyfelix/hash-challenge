@@ -4,13 +4,14 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile-discounts
+    command: make start
     volumes:
     - ./discounts:/go/api
     - ./testdata:/go/testdata
     stdin_open: true
     tty: true
     ports:
-    - 8080:8080
+    - 8080:80
 
   products:
     build:
@@ -26,7 +27,7 @@ services:
     stdin_open: true
     tty: true
     ports:
-    - 8081:8081
+    - 8081:80
   
   mongodb:
     image: mongo:4
