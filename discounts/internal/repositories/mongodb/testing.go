@@ -4,6 +4,7 @@ import (
 	"context"
 	"discounts/internal/infrastructure"
 	"discounts/internal/testing"
+	"discounts/internal/utils"
 	"reflect"
 
 	"github.com/kamva/mgm/v3"
@@ -27,6 +28,7 @@ func UserFixtures() ([]User, func()) {
 	var fixtures []User
 
 	testing.LoadJson(infrastructure.Config.FixturesPath+"/users.json", &fixtures)
+	fixtures[1].DateOfBirth = utils.Now()
 	LoadFixtures(fixtures)
 
 	updater := func() {

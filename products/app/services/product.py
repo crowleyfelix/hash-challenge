@@ -21,8 +21,8 @@ class ProductService:
         async def calculate_discount(product):
             try:
                 product.discount = await calculator.calculate(product)
-            except Exception:
-                logger.warning(f"Failed calculating discount for product {product.id}")
+            except Exception as ex:
+                logger.warning(f"Failed calculating discount for product {product.id}: {ex}")
 
         await asyncio.gather(*[calculate_discount(pr) for pr in products])
 

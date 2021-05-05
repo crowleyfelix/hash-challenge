@@ -1,10 +1,11 @@
 import logging
 from pydantic import BaseModel
-from proto.discounts_pb2 import CalculateRequest
+from proto.discounts_pb2 import CalculateRequest, CalculateResponse
 from app.infrastructure import ioc
 from .user import User
 
 logger = logging.getLogger(__name__)
+
 
 class Discount(BaseModel):
     percentage: float = None
@@ -22,5 +23,8 @@ class DiscountCalculator(BaseModel):
         request.user_id = self.user.id
         request.product_id = product.id
 
-        resp = await calculator.Calculate(request)
-        return Discount(percentage=0.1, value_in_cents=234)
+        resp: CalculateResponse = await calculator.Calculate(request)
+        discount = resp.product.discount
+
+        if discount and discount.percentage > 0:
+            return Discount(percentage=discount.percentage, value_in_cents=discount.value_in_cents)

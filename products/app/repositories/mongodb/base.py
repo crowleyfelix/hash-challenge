@@ -1,6 +1,8 @@
+import bson
 from motor.core import Collection
 from app.infrastructure import ioc
 from .schemas import BaseSchema
+
 
 class BaseRepository:
     collection_name = None
@@ -18,6 +20,9 @@ class BaseRepository:
         self.collection: Collection = database[self.collection_name]
         super().__init__()
 
+    async def _get_by_id(self, id):
+        document = await self.collection.find_one({"_id": bson.ObjectId(id)})
+        return document and self.entity_schema.load(document)
 
     async def _list(self, filters: dict):
         query = self.search_schema.dump(filters)
