@@ -2,8 +2,16 @@ import functools
 import asyncio
 from unittest import TestCase
 import json
-from app import application
+from sanic import Sanic
+from sanic_testing import TestManager
+from app import application, routes
+from app.tasks import FixturesTask
+from app.infrastructure import sanic
 
+server = Sanic(__name__)
+server.error_handler = sanic.CustomErrorHandler()
+TestManager(server)
+routes.register(server)
 
 def async_test(func, *args, **kwargs):
     @functools.wraps(func, *args, **kwargs)
@@ -19,7 +27,8 @@ class BaseTestCase(TestCase):
 
     def setUp(self, *args):
         self.loop = asyncio.get_event_loop()
-        self.app = application.build(self.loop)
+        self.app = application.build(server, self.loop)
+        self.fixtures = FixturesTask()
         super().setUp()
         self.loop.run_until_complete(self.setUpAsync())
 
@@ -29,9 +38,11 @@ class BaseTestCase(TestCase):
 
     async def setUpAsync(self):
         await self.app.setup()
+        await self.fixtures.execute()
 
     async def tearDownAsync(self):
         await self.app.shutdown()
+        await self.fixtures.revert()
 
     def async_return(self, result) -> asyncio.Future:
         f = asyncio.Future()

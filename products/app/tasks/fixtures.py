@@ -10,11 +10,12 @@ FIXTURES_PATH = "/testdata"
 class FixturesTask:
     def __init__(self):
         self.products = []
+
+    async def execute(self, params=None):
         config = ioc.instance(ioc.Dependencies.config)
         client = ioc.instance(ioc.Dependencies.mongodb_driver)
         self.db = client[config.mongodb.database]
 
-    async def execute(self, params=None):
         with open(f"{FIXTURES_PATH}/products.json") as f:
             for document in json.load(f):
                 product = schemas.PRODUCT_SCHEMA.load(document)

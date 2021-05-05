@@ -5,6 +5,7 @@ import inject
 class Dependencies(Enum):
     config = "config"
     loop = "loop"
+    server = "server"
     product_repo = "product_repo"
     product_svc = "product_svc"
     mongodb_driver = "mongodb_driver"

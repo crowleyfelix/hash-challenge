@@ -41,12 +41,11 @@ class WebServerTask(GunicornBaseEngine):
 
     def load(self):
         logger.debug("Loading server configuration")
-        server = Sanic(__name__)
-        server.error_handler = sanic.CustomErrorHandler()
-        routes.register(server)
-        server.before_server_start(self.on_server_start)
-        server.after_server_stop(self.on_server_stop)
-        return server
+        self.app.server.error_handler = sanic.CustomErrorHandler()
+        routes.register(self.app.server)
+        self.app.server.before_server_start(self.on_server_start)
+        self.app.server.after_server_stop(self.on_server_stop)
+        return self.app.server
 
     async def on_server_start(self, *args, **kwargs):
         logger.info("Starting server")
@@ -59,7 +58,7 @@ class WebServerTask(GunicornBaseEngine):
 
 
 if __name__ == "__main__":
-    app = application.build()
+    app = application.build(Sanic(__name__))
 
     task = WebServerTask(app)
     task.execute()

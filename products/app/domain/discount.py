@@ -22,5 +22,5 @@ class DiscountCalculator(BaseModel):
         request.user_id = self.user.id
         request.product_id = product.id
 
-        calculator.Calculate(request)
+        resp = await calculator.Calculate(request)
         return Discount(percentage=0.1, value_in_cents=234)
