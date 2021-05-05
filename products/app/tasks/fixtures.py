@@ -1,5 +1,6 @@
 import os
 import json
+import bson
 from motor.motor_asyncio import AsyncIOMotorClient
 from motor.core import Collection
 from app.repositories.mongodb import schemas
@@ -25,6 +26,6 @@ class FixturesTask:
 
     async def revert(self):
         for product in self.products:
-            await self.db.products.delete_one({"_id": product["id"]})
+            await self.db.products.delete_one({"_id": bson.ObjectId(product["id"])})
 
 

@@ -1,4 +1,5 @@
 import logging
+import asyncio
 from app import domain
 from app.infrastructure import ioc
 from . import contracts
@@ -17,7 +18,12 @@ class ProductService:
         repo = ioc.instance(ioc.Dependencies.product_repo)
         products = await repo.list(request)
 
-        for pr in products:
-            pr.discount = await calculator.calculate(pr)
+        async def calculate_discount(product):
+            try:
+                product.discount = await calculator.calculate(product)
+            except Exception:
+                logger.warning(f"Failed calculating discount for product {product.id}")
+
+        await asyncio.gather(*[calculate_discount(pr) for pr in products])
 
         return contracts.ListProductsResponse(data=products, **request)

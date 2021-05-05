@@ -5,6 +5,8 @@ services:
       context: .
       dockerfile: ./docker/Dockerfile-discounts
     command: make start
+    env_file: 
+      ./discounts/.env
     volumes:
     - ./discounts:/go/api
     - ./testdata:/go/testdata
