@@ -11,7 +11,7 @@ const (
 )
 
 type Discount struct {
-	Percentage   float32
+	Percentage   float64
 	ValueInCents int64
 }
 
@@ -34,7 +34,7 @@ func (c *birthdayDiscountRule) Calculate(price int64) *Discount {
 	if _, month, day := utils.Now().Date(); month == c.user.DateOfBirth.UTC().Month() && day == c.user.DateOfBirth.UTC().Day() {
 		return &Discount{
 			Percentage:   birthdayDiscountPerc,
-			ValueInCents: price - int64(float32(price)*birthdayDiscountPerc),
+			ValueInCents: price - int64(float64(price)*birthdayDiscountPerc),
 		}
 	}
 
@@ -48,7 +48,7 @@ func (c *blackFridayDiscountRule) Calculate(price int64) *Discount {
 	if _, month, day := utils.Now().Date(); month == 11 && day == 25 {
 		return &Discount{
 			Percentage:   blackFridayDiscountPerc,
-			ValueInCents: int64(float32(price) * blackFridayDiscountPerc),
+			ValueInCents: int64(float64(price) * blackFridayDiscountPerc),
 		}
 	}
 
@@ -61,6 +61,6 @@ func (c *maxDiscountRule) Calculate(price int64) *Discount {
 
 	return &Discount{
 		Percentage:   maxDiscountPerc,
-		ValueInCents: int64(float32(price) * maxDiscountPerc),
+		ValueInCents: int64(float64(price) * maxDiscountPerc),
 	}
 }

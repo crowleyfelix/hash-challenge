@@ -113,7 +113,7 @@ var _ = Describe("DiscountCalculator", func() {
 				It("should return blackfriday discount", func() {
 					Expect(err).To(BeNil())
 					Expect(resp.Product.Discount).ToNot(BeNil())
-					Expect(resp.Product.Discount.Percentage).To(Equal(float32(0.1)))
+					Expect(resp.Product.Discount.Percentage).To(Equal(float64(0.1)))
 				})
 			})
 
@@ -132,7 +132,7 @@ var _ = Describe("DiscountCalculator", func() {
 				It("should return birthday discount", func() {
 					Expect(err).To(BeNil())
 					Expect(resp.Product.Discount).ToNot(BeNil())
-					Expect(resp.Product.Discount.Percentage).To(Equal(float32(0.05)))
+					Expect(resp.Product.Discount.Percentage).To(Equal(float64(0.05)))
 				})
 			})
 
@@ -151,7 +151,7 @@ var _ = Describe("DiscountCalculator", func() {
 				It("should return limit discount", func() {
 					Expect(err).To(BeNil())
 					Expect(resp.Product.Discount).ToNot(BeNil())
-					Expect(resp.Product.Discount.Percentage).To(Equal(float32(0.1)))
+					Expect(resp.Product.Discount.Percentage).To(Equal(float64(0.1)))
 				})
 			})
 		})

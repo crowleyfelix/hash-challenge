@@ -1,5 +1,7 @@
 package domain
 
+import "log"
+
 type Product struct {
 	ID           string
 	PriceInCents int64
@@ -15,6 +17,7 @@ func (p *Product) AddCalculators(calcs ...DiscountCalculator) {
 }
 
 func (p *Product) Discount() *Discount {
+	log.Printf("calculating discounts")
 	c := make(chan *Discount, len(p.calcs))
 
 	for _, calc := range p.calcs {
@@ -42,6 +45,7 @@ func (p *Product) Discount() *Discount {
 	}
 
 	if disc.Percentage == 0 {
+		log.Printf("no discount available")
 		return nil
 	}
 

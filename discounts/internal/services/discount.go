@@ -5,6 +5,7 @@ import (
 	"discounts/internal/domain"
 	"discounts/internal/repositories"
 	"discounts/proto"
+	"log"
 )
 
 type discountCalculator struct {
@@ -16,6 +17,7 @@ func NewDiscountCalculator() *discountCalculator {
 }
 
 func (d *discountCalculator) Calculate(ctx context.Context, in *proto.CalculateRequest) (*proto.CalculateResponse, error) {
+	log.Printf("received calculate discount request")
 	prepo := repositories.NewProduct()
 	urepo := repositories.NewUser()
 
@@ -26,10 +28,12 @@ func (d *discountCalculator) Calculate(ctx context.Context, in *proto.CalculateR
 	)
 
 	if p, err = prepo.Find(in.ProductId); err != nil {
+		log.Printf("failed findind product %s", in.ProductId)
 		return nil, err
 	}
 
 	if u, err = urepo.Find(in.UserId); err != nil {
+		log.Printf("failed findind user %s", in.UserId)
 		return nil, err
 	}
 

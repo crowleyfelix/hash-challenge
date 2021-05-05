@@ -11,17 +11,4 @@ class Product(BaseModel):
     price_in_cents: int = None
     title: str = None
     description: str = None
-    discount_calculator: DiscountCalculator = None
-    _discount: Discount = PrivateAttr(default=None)
-
-    @property
-    def discount(self):
-        if not self._discount:
-            self._discount = self.discount_calculator.calculate()
-
-        return self._discount
-
-    def dict(self, *args, **kwargs):
-        d = super().dict(*args, **kwargs)
-        d["discount"] = self.discount and self.discount.dict()
-        return d
+    discount: Discount = None

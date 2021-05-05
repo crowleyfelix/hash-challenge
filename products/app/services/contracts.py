@@ -3,13 +3,6 @@ from pydantic import BaseModel
 from app import domain, errors
 
 
-class Product(domain.Product):
-    def dict(self, *args, **kwargs):
-        d = super().dict(*args, **kwargs)
-        d.pop("discount_calculator")
-        return d
-
-
 class ListRequest(BaseModel):
     limit: int = 10
     offset: int = 0
@@ -32,4 +25,4 @@ class ListProductsRequest(ListRequest):
 
 
 class ListProductsResponse(ListResponse):
-    data: List[Product] = None
+    pass

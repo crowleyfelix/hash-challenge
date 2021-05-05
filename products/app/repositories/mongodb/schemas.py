@@ -46,6 +46,13 @@ class ProductSchema(BaseSchema):
     description = fields.String()
 
 
+class UserSchema(BaseSchema):
+    id = MongoDBId(data_key="_id")
+    first_name = fields.String(data_key="firstName")
+    last_name = fields.String(data_key="lastName")
+    date_of_birth = fields.Raw(data_key="dateOfBirth")
+
+
 class PagingSchema(BaseSchema):
     limit = fields.Integer(validate=validate.Range(1, PAGE_LIMIT_MAX),
                            missing=PAGE_LIMIT_DEFAULT)
@@ -53,4 +60,5 @@ class PagingSchema(BaseSchema):
 
 
 PRODUCT_SCHEMA = ProductSchema(validate_dump=True)
+USER_SCHEMA = UserSchema(validate_dump=True)
 PAGING_SCHEMA = PagingSchema(validate_dump=True)

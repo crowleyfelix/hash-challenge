@@ -8,6 +8,9 @@ dep:
 start:
 	@docker-compose up -d
 
+stop:
+	@docker-compose down
+
 fixtures:
 	@docker-compose run discounts make fixtures
 

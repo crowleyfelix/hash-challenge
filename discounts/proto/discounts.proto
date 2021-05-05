@@ -37,6 +37,6 @@ message Product {
 }
 
 message Discount {
-    float percentage = 1;
+    double percentage = 1;
     int64 value_in_cents = 2;
 }

@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z\017discounts/proto',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0f\x64iscounts.proto\x12\tdiscounts\x1a\x1fgoogle/protobuf/timestamp.proto\"7\n\x10\x43\x61lculateRequest\x12\x12\n\nproduct_id\x18\x01 \x01(\t\x12\x0f\n\x07user_id\x18\x02 \x01(\t\"W\n\x11\x43\x61lculateResponse\x12\x1d\n\x04user\x18\x01 \x01(\x0b\x32\x0f.discounts.User\x12#\n\x07product\x18\x02 \x01(\x0b\x32\x12.discounts.Product\"l\n\x04User\x12\n\n\x02id\x18\x01 \x01(\t\x12\x12\n\nfirst_name\x18\x02 \x01(\t\x12\x11\n\tlast_name\x18\x03 \x01(\t\x12\x31\n\rdate_of_birth\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"x\n\x07Product\x12\n\n\x02id\x18\x01 \x01(\t\x12\x16\n\x0eprice_in_cents\x18\x02 \x01(\x03\x12\r\n\x05title\x18\x03 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x04 \x01(\t\x12%\n\x08\x64iscount\x18\x05 \x01(\x0b\x32\x13.discounts.Discount\"6\n\x08\x44iscount\x12\x12\n\npercentage\x18\x01 \x01(\x02\x12\x16\n\x0evalue_in_cents\x18\x02 \x01(\x03\x32^\n\x12\x44iscountCalculator\x12H\n\tCalculate\x12\x1b.discounts.CalculateRequest\x1a\x1c.discounts.CalculateResponse\"\x00\x42\x11Z\x0f\x64iscounts/protob\x06proto3'
+  serialized_pb=b'\n\x0f\x64iscounts.proto\x12\tdiscounts\x1a\x1fgoogle/protobuf/timestamp.proto\"7\n\x10\x43\x61lculateRequest\x12\x12\n\nproduct_id\x18\x01 \x01(\t\x12\x0f\n\x07user_id\x18\x02 \x01(\t\"W\n\x11\x43\x61lculateResponse\x12\x1d\n\x04user\x18\x01 \x01(\x0b\x32\x0f.discounts.User\x12#\n\x07product\x18\x02 \x01(\x0b\x32\x12.discounts.Product\"l\n\x04User\x12\n\n\x02id\x18\x01 \x01(\t\x12\x12\n\nfirst_name\x18\x02 \x01(\t\x12\x11\n\tlast_name\x18\x03 \x01(\t\x12\x31\n\rdate_of_birth\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"x\n\x07Product\x12\n\n\x02id\x18\x01 \x01(\t\x12\x16\n\x0eprice_in_cents\x18\x02 \x01(\x03\x12\r\n\x05title\x18\x03 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x04 \x01(\t\x12%\n\x08\x64iscount\x18\x05 \x01(\x0b\x32\x13.discounts.Discount\"6\n\x08\x44iscount\x12\x12\n\npercentage\x18\x01 \x01(\x01\x12\x16\n\x0evalue_in_cents\x18\x02 \x01(\x03\x32^\n\x12\x44iscountCalculator\x12H\n\tCalculate\x12\x1b.discounts.CalculateRequest\x1a\x1c.discounts.CalculateResponse\"\x00\x42\x11Z\x0f\x64iscounts/protob\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -228,7 +228,7 @@ _DISCOUNT = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='percentage', full_name='discounts.Discount.percentage', index=0,
-      number=1, type=2, cpp_type=6, label=1,
+      number=1, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,

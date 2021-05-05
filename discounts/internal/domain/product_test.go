@@ -12,10 +12,10 @@ func (m *calculatorMock) Calculate(price int64) *Discount {
 		return nil
 	}
 
-	perc := float32(0.05)
+	perc := float64(0.05)
 	return &Discount{
 		Percentage:   0.05,
-		ValueInCents: int64(float32(price) * perc),
+		ValueInCents: int64(float64(price) * perc),
 	}
 }
 
@@ -46,7 +46,7 @@ var _ = Describe("Product", func() {
 
 			It("should not return a discount", func() {
 				Expect(discount).ToNot(BeNil())
-				Expect(discount.Percentage).To(BeEquivalentTo(float32(0.05)))
+				Expect(discount.Percentage).To(BeEquivalentTo(float64(0.05)))
 				Expect(discount.ValueInCents).To(BeEquivalentTo(5))
 			})
 		})
@@ -56,7 +56,7 @@ var _ = Describe("Product", func() {
 
 			It("should not return a discount", func() {
 				Expect(discount).ToNot(BeNil())
-				Expect(discount.Percentage).To(BeEquivalentTo(float32(0.1)))
+				Expect(discount.Percentage).To(BeEquivalentTo(float64(0.1)))
 				Expect(discount.ValueInCents).To(BeEquivalentTo(10))
 			})
 		})
@@ -68,7 +68,7 @@ var _ = Describe("Product", func() {
 
 			It("should return a max discount", func() {
 				Expect(discount).ToNot(BeNil())
-				Expect(discount.Percentage).To(BeEquivalentTo(float32(0.1)))
+				Expect(discount.Percentage).To(BeEquivalentTo(float64(0.1)))
 				Expect(discount.ValueInCents).To(BeEquivalentTo(10))
 			})
 		})

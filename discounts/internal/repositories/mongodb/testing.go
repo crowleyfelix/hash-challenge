@@ -2,19 +2,19 @@ package mongodb
 
 import (
 	"context"
+	"discounts/internal/infrastructure"
 	"discounts/internal/testing"
+	"discounts/internal/utils"
 	"reflect"
 
 	"github.com/kamva/mgm/v3"
 	. "github.com/onsi/ginkgo"
 )
 
-const FixturesPath = "/go/testdata"
-
 func ProductFixtures() ([]Product, func()) {
 	var fixtures []Product
 
-	testing.LoadJson(FixturesPath+"/products.json", &fixtures)
+	testing.LoadJson(infrastructure.Config.FixturesPath+"/products.json", &fixtures)
 	LoadFixtures(fixtures)
 
 	updater := func() {
@@ -27,7 +27,8 @@ func ProductFixtures() ([]Product, func()) {
 func UserFixtures() ([]User, func()) {
 	var fixtures []User
 
-	testing.LoadJson(FixturesPath+"/users.json", &fixtures)
+	testing.LoadJson(infrastructure.Config.FixturesPath+"/users.json", &fixtures)
+	fixtures[1].DateOfBirth = utils.Now()
 	LoadFixtures(fixtures)
 
 	updater := func() {
