@@ -1,6 +1,6 @@
 import logging
 import asyncio
-from app import domain
+from app import domain, errors
 from app.infrastructure import ioc
 from . import contracts
 
@@ -21,6 +21,8 @@ class ProductService:
         async def calculate_discount(product):
             try:
                 product.discount = await calculator.calculate(product)
+            except errors.BaseError:
+                raise
             except Exception as ex:
                 logger.warning(f"Failed calculating discount for product {product.id}: {ex}")
 

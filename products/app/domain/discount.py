@@ -1,6 +1,9 @@
 import logging
+from grpc import StatusCode
+from grpc.aio import AioRpcError
 from pydantic import BaseModel
 from proto.discounts_pb2 import CalculateRequest, CalculateResponse
+from app import errors
 from app.infrastructure import ioc
 from .user import User
 
@@ -23,7 +26,13 @@ class DiscountCalculator(BaseModel):
         request.user_id = self.user.id
         request.product_id = product.id
 
-        resp: CalculateResponse = await calculator.Calculate(request)
+        try:
+            resp: CalculateResponse = await calculator.Calculate(request)
+        except AioRpcError as ex:
+            if ex.code() == StatusCode.NOT_FOUND:
+                raise errors.NotFound(ex.details())
+            raise
+
         discount = resp.product.discount
 
         if discount and discount.percentage > 0:

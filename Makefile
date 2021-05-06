@@ -1,9 +1,12 @@
 build:
+	@cp discounts/.env.example discounts/.env
+	@cp products/.env.example products/.env
 	@docker-compose build
-	@make dep
+	@make start fixtures test
+	@make fixtures
 
 dep:
-	@docker-compose run discounts make dep
+	@docker-compose run products make dep
 
 start:
 	@docker-compose up -d

@@ -1,6 +1,3 @@
-dep:
-	@go mod vendor
-
 start:
 	@go run cmd/api/main.go
 
