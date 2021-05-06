@@ -3,6 +3,7 @@ build:
 	@cp products/.env.example products/.env
 	@docker-compose build
 	@make start fixtures test
+	@make fixtures
 
 dep:
 	@docker-compose run products make dep
