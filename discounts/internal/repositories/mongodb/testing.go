@@ -28,7 +28,7 @@ func UserFixtures() ([]User, func()) {
 	var fixtures []User
 
 	testing.LoadJson(infrastructure.Config.FixturesPath+"/users.json", &fixtures)
-	fixtures[1].DateOfBirth = utils.Now()
+	fixtures[1].DateOfBirth = utils.Now().In(fixtures[1].DateOfBirth.Location())
 	LoadFixtures(fixtures)
 
 	updater := func() {

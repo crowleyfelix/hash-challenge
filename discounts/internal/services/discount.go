@@ -28,12 +28,12 @@ func (d *discountCalculator) Calculate(ctx context.Context, in *proto.CalculateR
 	)
 
 	if p, err = prepo.Find(in.ProductId); err != nil {
-		log.Printf("failed findind product %s", in.ProductId)
+		log.Printf("failed finding product %s: %s", in.ProductId, err.Error())
 		return nil, err
 	}
 
 	if u, err = urepo.Find(in.UserId); err != nil {
-		log.Printf("failed findind user %s", in.UserId)
+		log.Printf("failed finding user %s: %s", in.UserId, err.Error())
 		return nil, err
 	}
 

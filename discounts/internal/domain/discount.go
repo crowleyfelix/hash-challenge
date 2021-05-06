@@ -22,16 +22,18 @@ type DiscountCalculator interface {
 func NewDiscountCalculators(user *User) []DiscountCalculator {
 	return []DiscountCalculator{
 		&birthdayDiscountRule{user},
-		&blackFridayDiscountRule{},
+		&blackFridayDiscountRule{user},
 	}
 }
 
 type birthdayDiscountRule struct{ user *User }
 
 func (c *birthdayDiscountRule) Calculate(price int64) *Discount {
+	bday := c.user.DateOfBirth
+	now := utils.Now().In(bday.Location())
 
 	//TODO: resolver time zone
-	if _, month, day := utils.Now().Date(); month == c.user.DateOfBirth.UTC().Month() && day == c.user.DateOfBirth.UTC().Day() {
+	if _, month, day := now.Date(); month == bday.Month() && day == bday.Day() {
 		return &Discount{
 			Percentage:   birthdayDiscountPerc,
 			ValueInCents: price - int64(float64(price)*birthdayDiscountPerc),
@@ -41,11 +43,12 @@ func (c *birthdayDiscountRule) Calculate(price int64) *Discount {
 	return nil
 }
 
-type blackFridayDiscountRule struct{}
+type blackFridayDiscountRule struct{ user *User }
 
 func (c *blackFridayDiscountRule) Calculate(price int64) *Discount {
+	now := utils.Now().In(c.user.DateOfBirth.Location())
 
-	if _, month, day := utils.Now().Date(); month == 11 && day == 25 {
+	if _, month, day := now.Date(); month == 11 && day == 25 {
 		return &Discount{
 			Percentage:   blackFridayDiscountPerc,
 			ValueInCents: int64(float64(price) * blackFridayDiscountPerc),

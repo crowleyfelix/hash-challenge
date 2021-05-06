@@ -2,8 +2,10 @@ package mongodb
 
 import (
 	"discounts/internal/domain"
+	"discounts/internal/errors"
 
 	"github.com/kamva/mgm/v3"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type repository struct{}
@@ -12,6 +14,9 @@ func (repo *repository) Find(id string, model mgm.Model) error {
 	coll := mgm.Coll(model)
 
 	if err := coll.FindByID(id, model); err != nil {
+		if err == mongo.ErrNoDocuments {
+			return errors.NewNotFound(id)
+		}
 		return err
 	}
 
