@@ -51,6 +51,7 @@ class UserSchema(BaseSchema):
     first_name = fields.String(data_key="firstName")
     last_name = fields.String(data_key="lastName")
     date_of_birth = fields.Raw(data_key="dateOfBirth")
+    location = fields.String()
 
 
 class PagingSchema(BaseSchema):

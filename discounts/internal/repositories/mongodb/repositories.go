@@ -3,6 +3,7 @@ package mongodb
 import (
 	"discounts/internal/domain"
 	"discounts/internal/errors"
+	"time"
 
 	"github.com/kamva/mgm/v3"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -47,10 +48,13 @@ func (repo *UserRepository) Find(id string) (*domain.User, error) {
 		return nil, err
 	}
 
+	loc, _ := time.LoadLocation(data.Location)
+
 	return &domain.User{
 		ID:          data.ID.Hex(),
 		FirstName:   data.FirstName,
 		LastName:    data.LastName,
-		DateOfBirth: data.DateOfBirth,
+		DateOfBirth: data.DateOfBirth.In(loc),
+		Location:    data.Location,
 	}, nil
 }

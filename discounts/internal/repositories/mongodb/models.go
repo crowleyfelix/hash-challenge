@@ -18,4 +18,5 @@ type User struct {
 	FirstName        string    `json:"firstName" bson:"firstName"`
 	LastName         string    `json:"lastName" bson:"lastName"`
 	DateOfBirth      time.Time `json:"dateOfBirth" bson:"dateOfBirth"`
+	Location         string    `json:"location" bson:"location"`
 }

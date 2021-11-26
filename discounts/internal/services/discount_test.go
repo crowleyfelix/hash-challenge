@@ -38,6 +38,7 @@ var _ = Describe("DiscountCalculator", func() {
 	AfterEach(func() {
 		mongodb.DisposeFixtures(products)
 		mongodb.DisposeFixtures(users)
+		utils.MockedNow = nil
 	})
 
 	Describe("calculating a discount", func() {
@@ -100,7 +101,7 @@ var _ = Describe("DiscountCalculator", func() {
 
 			Context("and is black friday", func() {
 				BeforeEach(func() {
-					m, _ := time.Parse(time.RFC3339, "2021-11-25T00:00:00+00:00")
+					m, _ := time.Parse(time.RFC3339, "2021-11-25T03:00:00+00:00")
 					utils.MockedNow = &m
 
 					bd, _ := time.Parse(time.RFC3339, "1990-10-26T00:00:00+00:00")
@@ -138,7 +139,7 @@ var _ = Describe("DiscountCalculator", func() {
 
 			Context("and discounts exceeds limit", func() {
 				BeforeEach(func() {
-					m, _ := time.Parse(time.RFC3339, "2021-11-25T00:00:00+00:00")
+					m, _ := time.Parse(time.RFC3339, "2021-11-25T03:00:00+00:00")
 					utils.MockedNow = &m
 
 					bd, _ := time.Parse(time.RFC3339, "1990-11-25T00:00:00+00:00")
